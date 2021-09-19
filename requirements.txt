@@ -1,0 +1,3 @@
+git+https://github.com/yupix/Mi.py.git
+loguru
+python-dotenv
