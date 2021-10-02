@@ -293,7 +293,7 @@ class Html(BaseModel):
     href: str
 
 
-class Issue(BaseModel):
+class IssueLink(BaseModel):
     href: str
 
 
@@ -319,7 +319,7 @@ class Statuses(BaseModel):
 class Links(BaseModel):
     self: Self
     html: Html
-    issue: Issue
+    issue: IssueLink
     comments: Comments
     review_comments: ReviewComments
     review_comment: ReviewComment
@@ -454,4 +454,3 @@ class GitWebHook(BaseModel):
     head_commit: Optional[HeadCommit] = None
     pusher: Optional[Pusher] = None
     compare: Optional[str] = None
-    
