@@ -1,0 +1,6 @@
+word:
+  おはよ～:
+    replay: 'おはようございます！{}{}'
+    func:
+      path: sakuraAoi.actions.basic
+      name: good_morning
