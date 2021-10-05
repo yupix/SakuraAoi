@@ -4,3 +4,11 @@ word:
     func:
       path: sakuraAoi.actions.basic
       name: good_morning
+
+regex:
+  'フォロー(.*)':
+    follow_replay: 'よろしくね、{}さん'
+    unfollow_replay: 'またね、{}{}'
+    func:
+      path: sakuraAoi.actions.basic
+      name: follow_me

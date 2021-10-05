@@ -273,17 +273,20 @@ class Sender(BaseModel):
     type: Optional[str] = None
     site_admin: Optional[bool] = None
 
+
 class Head(BaseModel):
     label: str
     ref: str
     sha: str
     user: User
 
+
 class Base(BaseModel):
     label: str
     ref: str
     sha: str
     user: User
+
 
 class Self(BaseModel):
     href: str
@@ -316,6 +319,7 @@ class Commits(BaseModel):
 class Statuses(BaseModel):
     href: str
 
+
 class Links(BaseModel):
     self: Self
     html: Html
@@ -346,6 +350,7 @@ class MergedBy(BaseModel):
     received_events_url: str
     type: str
     site_admin: bool
+
 
 class PullRequest(BaseModel):
     url: str
@@ -397,10 +402,12 @@ class PullRequest(BaseModel):
     deletions: int
     changed_files: int
 
+
 class Author(BaseModel):
     name: str
     email: str
     username: str
+
 
 class Committer(BaseModel):
     name: str
@@ -421,6 +428,7 @@ class Commit(BaseModel):
     removed: List
     modified: List[str]
 
+
 class HeadCommit(BaseModel):
     id: str
     tree_id: str
@@ -434,9 +442,11 @@ class HeadCommit(BaseModel):
     removed: List
     modified: List[str]
 
+
 class Pusher(BaseModel):
     name: str
     email: str
+
 
 class GitWebHook(BaseModel):
     before: Optional[str] = None
