@@ -1,10 +1,13 @@
+import argparse
 import asyncio
 import os
+import sys
 
 from dbmanager.dbmanager import DbManager
 from dotenv import load_dotenv
 from loguru import logger
-from mi import Follow, Note, Router, UserProfile, commands
+from mi import Follow, Note, Router, commands
+from mi.utils import check_multi_arg
 
 from db import session
 from sakuraAoi.modules.auto_migrate import AutoMigrate
@@ -12,6 +15,15 @@ from sakuraAoi.modules.webhook import run_webhook
 from sakuraAoi.sql.models.user import User
 
 EXTENSION_LIST = ['sakuraAoi.cogs.chat']
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--db', action='store_true')
+parser.add_argument('-i', action='store_true')
+args = parser.parse_args()
+
+
+async def migrate():
+    await AutoMigrate().generate().upgrade()
 
 
 class SakuraAoi(commands.Bot):
@@ -21,8 +33,9 @@ class SakuraAoi(commands.Bot):
             self.load_extension(extension)
 
     async def on_ready(self, ws):
-        #await AutoMigrate().generate().upgrade()
         logger.info(f'{self.i.username}にログインしました')
+        if check_multi_arg(args.db, args.i):
+            await AutoMigrate().generate().upgrade()
         await Router(ws).channels(['home'])  # globalタイムラインに接続
 
     async def on_message(self, ctx: Note):
