@@ -1,8 +1,9 @@
 import importlib
 import re
 
+import sympy as sympy
 import yaml
-from mi import Note, commands
+from mi import Context, Note, commands
 
 with open('word.yml', mode='r', encoding='utf-8') as f:
     word_file = yaml.safe_load(f.read())
@@ -14,9 +15,10 @@ class ChatCog(commands.Cog):
     def __init__(self, bot) -> None:
         self.bot = bot
 
-    @commands.command(name='ｺﾝﾆﾁﾜ')
-    async def hello(self, ctx):
-        await Note(text='ｺﾝﾆﾁﾜ').send()
+    @commands.command(name='数式')
+    async def hello(self, ctx: Context, formula, *args):
+        arg = formula + ''.join(args)
+        await Note(text=f'{formula} の答えは {sympy.sympify(arg)} です！', reply_id=ctx.message.id).send()
 
     @commands.Cog.listener()
     async def on_mention(self, ws, ctx):

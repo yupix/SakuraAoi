@@ -5,3 +5,4 @@ PyYAML
 SQLAlchemy
 alembic
 git+https://github.com/yupix/dbmanager@93258484bcfe90a6ca10850cb121cfb993ec1039
+sympy
