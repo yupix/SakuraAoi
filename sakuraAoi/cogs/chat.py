@@ -3,7 +3,9 @@ import re
 
 import sympy as sympy
 import yaml
-from mi import Context, Note, commands
+from mi.ext import commands
+from mi.ext.commands import Context
+from mi.note import NoteContent
 
 with open('word.yml', mode='r', encoding='utf-8') as f:
     word_file = yaml.safe_load(f.read())
@@ -18,12 +20,16 @@ class ChatCog(commands.Cog):
     @commands.command(name='数式')
     async def hello(self, ctx: Context, formula, *args):
         arg = formula + ''.join(args)
-        await Note(text=f'{formula} の答えは {sympy.sympify(arg)} です！', reply_id=ctx.message.id).send()
+        await NoteContent(text=f'{formula} の答えは {sympy.sympify(arg)} です！',
+                          reply_id=ctx.message.id).send()
 
     @commands.Cog.listener()
     async def on_mention(self, ws, ctx):
-        action_list = [{'list': regex_list[i], 'name': i} for i in regex_list if re.search(i, ctx.text)]
-        action_list.extend([{'list': word_list[i], 'name': i} for i in word_list if i == ctx.text])
+        action_list = [{'list': regex_list[i], 'name': i} for i in regex_list
+                       if re.search(i, ctx.text)]
+        action_list.extend(
+            [{'list': word_list[i], 'name': i} for i in word_list if
+             i == ctx.text])
         for action in action_list:
             action_base = action.get('list')
             func = action_base.get('func', None)
