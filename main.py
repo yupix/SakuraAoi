@@ -63,7 +63,7 @@ class SakuraAoi(commands.Bot):
         mega = Mega()
         m = mega.login(mega_email, mega_password)
         m.upload(os.path.abspath(f"./backup/{file_name}.tar.gz"))
-        logger.warning(f'MEGAへのバックアップのアップロードが完了しました')
+        logger.success(f'MEGAへのバックアップのアップロードが完了しました')
         elapsed_time = math.floor(time.time() - start_time)
         await Note(f'データベースのバックアップが完了しました 処理時間: {elapsed_time}秒').send()
 
@@ -71,11 +71,10 @@ class SakuraAoi(commands.Bot):
         logger.info(f'{self.i.username}にログインしました')
         if check_multi_arg(args.db, args.i):
             await AutoMigrate().generate().upgrade()
-        self.backup.start()
         await Router(ws).channels(['home', 'global'])  # globalタイムラインに接続
+        self.backup.start()
 
     async def on_message(self, ctx: NoteContent):
-        print('koko')
         logger.info(f'{ctx.author.username}さんがノートしました。{ctx.content}')
 
     async def on_emoji_add(self, ctx: Emoji):
